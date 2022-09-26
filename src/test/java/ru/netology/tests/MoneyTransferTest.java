@@ -30,7 +30,7 @@ public class MoneyTransferTest {
     @ParameterizedTest
     @CsvSource(value = {"10000", "9999", "555", "2", "1"}) //only happy path borders and random in between
     void shouldTransferMoneyToCard(int amount) {
-        vasyaDashboard = vasyaDashboard.pressFirstCardButton().refill(amount, "5559 0000 0000 0002");
+        vasyaDashboard = vasyaDashboard.pressFirstCardButton().refill(amount, DataHelper.getCard2Info().getCardNumber());
 
         int actualCard1 = vasyaDashboard.getFirstCardBalance();
         int expectedCard1 = firstCardStartBalance + amount;
@@ -41,6 +41,6 @@ public class MoneyTransferTest {
         assertEquals(expectedCard2, actualCard2);
 
         //return SUT in a default condition to be independent of the tests sequence
-        vasyaDashboard.pressSecondCardButton().refill(2 * amount, "5559 0000 0000 0001");
+        vasyaDashboard.pressSecondCardButton().refill(amount, DataHelper.getCard1Info().getCardNumber());
     }
 }
